@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f26d9bd2eebfc6979b8bde5f00235cbe {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+<div style='position:fixed;bottom:35px;left:35px;z-index:1000;
+            background:#1a1a2e;padding:16px 20px;border-radius:12px;
+            border:1px solid #e94560;font-family:Arial;color:#ccc;
+            box-shadow:0 4px 15px rgba(0,0,0,0.5);'>
+  <div style='color:#e94560;font-weight:700;font-size:1em;margin-bottom:10px;'>
+    🗺️ Severity Scale
+  </div>
+  <div><span style='color:#ff2d55;font-size:1.3em;'>●</span> &gt;75% max</div>
+  <div><span style='color:#ff6b35;font-size:1.3em;'>●</span> 50–75%</div>
+  <div><span style='color:#ffcc02;font-size:1.3em;'>●</span> 25–50%</div>
+  <div><span style='color:#34c759;font-size:1.3em;'>●</span> &lt;25%</div>
+  <div style='margin-top:10px;color:#8b949e;font-size:.8em;'>Circle size = case count</div>
+</div>
+    
+            <div class="folium-map" id="map_f26d9bd2eebfc6979b8bde5f00235cbe" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f26d9bd2eebfc6979b8bde5f00235cbe = L.map(
+                "map_f26d9bd2eebfc6979b8bde5f00235cbe",
+                {
+                    center: [20.5937, 78.9629],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4819a044c408fbb3200d14c205a2456a = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_4819a044c408fbb3200d14c205a2456a.addTo(map_f26d9bd2eebfc6979b8bde5f00235cbe);
+        
+    
+            var tile_layer_1c3913d5fc975af8e49376cc6345274c = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detect_retina": false, "max_native_zoom": 20, "max_zoom": 20, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
+            );
+            var mini_map_463e95ab206b1c0bad04441fca6c8e8d = new L.Control.MiniMap(
+                tile_layer_1c3913d5fc975af8e49376cc6345274c,
+                {
+  "position": "bottomright",
+  "width": 150,
+  "height": 150,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -5,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_f26d9bd2eebfc6979b8bde5f00235cbe.addControl(mini_map_463e95ab206b1c0bad04441fca6c8e8d);
+        
+    
+            var marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047 = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_91c26ef060046b54e492dc70c22e8e47 = L.circleMarker(
+                [12.9716, 77.5946],
+                {"bubblingMouseEvents": true, "color": "#ff6b35", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff6b35", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 34.004608294930875, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_6b8a7ccad5ed774f6de14e1e0dfac300 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_eb5e753b3f0ae5403166e854da72fd57 = $(`<div id="html_eb5e753b3f0ae5403166e854da72fd57" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Bangalore</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>13,370</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>397</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>11,019</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>5,358</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>66,850</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>2.97%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>20.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_6b8a7ccad5ed774f6de14e1e0dfac300.setContent(html_eb5e753b3f0ae5403166e854da72fd57);
+            
+        
+
+        circle_marker_91c26ef060046b54e492dc70c22e8e47.bindPopup(popup_6b8a7ccad5ed774f6de14e1e0dfac300)
+        ;
+
+        
+    
+    
+            circle_marker_91c26ef060046b54e492dc70c22e8e47.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Bangalore</b><br>13,370 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f6372866597c1e0ad83009fe2947956c = L.circleMarker(
+                [13.0827, 80.2707],
+                {"bubblingMouseEvents": true, "color": "#ff2d55", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff2d55", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 42.0, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_8b3c1af24662078c6f19af61220c0feb = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_34ae2eb0f9a560f160b87f5f3f0fbc02 = $(`<div id="html_34ae2eb0f9a560f160b87f5f3f0fbc02" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Chennai</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>18,228</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>535</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>16,398</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>3,591</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>91,140</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>2.94%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>20.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_8b3c1af24662078c6f19af61220c0feb.setContent(html_34ae2eb0f9a560f160b87f5f3f0fbc02);
+            
+        
+
+        circle_marker_f6372866597c1e0ad83009fe2947956c.bindPopup(popup_8b3c1af24662078c6f19af61220c0feb)
+        ;
+
+        
+    
+    
+            circle_marker_f6372866597c1e0ad83009fe2947956c.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Chennai</b><br>18,228 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6a35a344ad1f8f931f0b956ba710bf38 = L.circleMarker(
+                [28.7041, 77.1025],
+                {"bubblingMouseEvents": true, "color": "#ff6b35", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff6b35", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 33.236010533245555, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_bdae43b9bc38822dcc78c5d58885bc20 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_aaeaec3120fad4d287fa77eb6333c0ce = $(`<div id="html_aaeaec3120fad4d287fa77eb6333c0ce" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Delhi</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>12,903</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>163</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>9,150</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>9,175</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>38,709</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>1.26%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>33.3%</td></tr>       </table>     </div></div>`)[0];
+                popup_bdae43b9bc38822dcc78c5d58885bc20.setContent(html_aaeaec3120fad4d287fa77eb6333c0ce);
+            
+        
+
+        circle_marker_6a35a344ad1f8f931f0b956ba710bf38.bindPopup(popup_bdae43b9bc38822dcc78c5d58885bc20)
+        ;
+
+        
+    
+    
+            circle_marker_6a35a344ad1f8f931f0b956ba710bf38.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Delhi</b><br>12,903 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9935c83e36d70e3824f07043b86c7e85 = L.circleMarker(
+                [28.4595, 77.0266],
+                {"bubblingMouseEvents": true, "color": "#ffcc02", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffcc02", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 26.577024358130352, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_1a637c10ad817a05e41f9447b3f12fb1 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_8a83ff38dbd8c56f0ad583b6b5a9e6eb = $(`<div id="html_8a83ff38dbd8c56f0ad583b6b5a9e6eb" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Gurugram</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>8,857</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>263</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>7,578</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>6,869</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>35,428</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>2.97%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>25.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_1a637c10ad817a05e41f9447b3f12fb1.setContent(html_8a83ff38dbd8c56f0ad583b6b5a9e6eb);
+            
+        
+
+        circle_marker_9935c83e36d70e3824f07043b86c7e85.bindPopup(popup_1a637c10ad817a05e41f9447b3f12fb1)
+        ;
+
+        
+    
+    
+            circle_marker_9935c83e36d70e3824f07043b86c7e85.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Gurugram</b><br>8,857 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f70121616675aa85789ef7c4a3c240f2 = L.circleMarker(
+                [17.385, 78.4867],
+                {"bubblingMouseEvents": true, "color": "#ff2d55", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff2d55", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 37.02139565503621, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_09fbdd9cc1c3d3a0aadc7c7e8ff45a4e = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_646888783f1ef3b5ebd059ef1d6abb59 = $(`<div id="html_646888783f1ef3b5ebd059ef1d6abb59" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Hyderabad</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>15,203</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>208</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>12,685</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>4,768</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>60,812</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>1.37%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>25.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_09fbdd9cc1c3d3a0aadc7c7e8ff45a4e.setContent(html_646888783f1ef3b5ebd059ef1d6abb59);
+            
+        
+
+        circle_marker_f70121616675aa85789ef7c4a3c240f2.bindPopup(popup_09fbdd9cc1c3d3a0aadc7c7e8ff45a4e)
+        ;
+
+        
+    
+    
+            circle_marker_f70121616675aa85789ef7c4a3c240f2.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Hyderabad</b><br>15,203 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_33c7fff36d946e8ed9cf96cd8e99411b = L.circleMarker(
+                [22.5726, 88.3639],
+                {"bubblingMouseEvents": true, "color": "#ff2d55", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff2d55", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 37.36208031599737, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_a2c49e38cd0b2442f24eb0a06c2ff21d = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_08bfa96067a1a7f9cb9c7b88acad087b = $(`<div id="html_08bfa96067a1a7f9cb9c7b88acad087b" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Kolkata</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>15,410</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>370</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>14,449</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>6,832</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>61,640</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>2.40%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>25.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_a2c49e38cd0b2442f24eb0a06c2ff21d.setContent(html_08bfa96067a1a7f9cb9c7b88acad087b);
+            
+        
+
+        circle_marker_33c7fff36d946e8ed9cf96cd8e99411b.bindPopup(popup_a2c49e38cd0b2442f24eb0a06c2ff21d)
+        ;
+
+        
+    
+    
+            circle_marker_33c7fff36d946e8ed9cf96cd8e99411b.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Kolkata</b><br>15,410 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_083ddf248796640b70ff66ceba726154 = L.circleMarker(
+                [19.076, 72.8777],
+                {"bubblingMouseEvents": true, "color": "#ff2d55", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff2d55", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 41.17215273206057, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_d8e72bc0596f3aceb53dd87b6e8e045c = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_2d904616ff8e4ae37b6fdf536e8b3fc0 = $(`<div id="html_2d904616ff8e4ae37b6fdf536e8b3fc0" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Mumbai</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>17,725</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>361</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>15,677</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>9,502</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>53,175</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>2.04%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>33.3%</td></tr>       </table>     </div></div>`)[0];
+                popup_d8e72bc0596f3aceb53dd87b6e8e045c.setContent(html_2d904616ff8e4ae37b6fdf536e8b3fc0);
+            
+        
+
+        circle_marker_083ddf248796640b70ff66ceba726154.bindPopup(popup_d8e72bc0596f3aceb53dd87b6e8e045c)
+        ;
+
+        
+    
+    
+            circle_marker_083ddf248796640b70ff66ceba726154.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Mumbai</b><br>17,725 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_56c2ca4a31db4905db7dd37be8cb1b4f = L.circleMarker(
+                [28.5355, 77.391],
+                {"bubblingMouseEvents": true, "color": "#ff2d55", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff2d55", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 35.684990125082294, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_42ec8a58b3b72724c7fb77e2066a4329 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_ba25b7595a9fa5ee8281ab570e0a2b20 = $(`<div id="html_ba25b7595a9fa5ee8281ab570e0a2b20" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Noida</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>14,391</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>232</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>12,506</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>8,382</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>57,564</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>1.61%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>25.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_42ec8a58b3b72724c7fb77e2066a4329.setContent(html_ba25b7595a9fa5ee8281ab570e0a2b20);
+            
+        
+
+        circle_marker_56c2ca4a31db4905db7dd37be8cb1b4f.bindPopup(popup_42ec8a58b3b72724c7fb77e2066a4329)
+        ;
+
+        
+    
+    
+            circle_marker_56c2ca4a31db4905db7dd37be8cb1b4f.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Noida</b><br>14,391 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_32343146030953455bbfb4f88c792f1b = L.circleMarker(
+                [29.3909, 76.9635],
+                {"bubblingMouseEvents": true, "color": "#ff2d55", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff2d55", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 41.267610269914414, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_aa87ffd32b591aca998baa6d8a41021b = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_d578b8953e8c165e6a0bab1be4e5a809 = $(`<div id="html_d578b8953e8c165e6a0bab1be4e5a809" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Panipat</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>17,783</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>288</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>13,733</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>5,841</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>88,915</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>1.62%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>20.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_aa87ffd32b591aca998baa6d8a41021b.setContent(html_d578b8953e8c165e6a0bab1be4e5a809);
+            
+        
+
+        circle_marker_32343146030953455bbfb4f88c792f1b.bindPopup(popup_aa87ffd32b591aca998baa6d8a41021b)
+        ;
+
+        
+    
+    
+            circle_marker_32343146030953455bbfb4f88c792f1b.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Panipat</b><br>17,783 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_eae2fdbe4dc2c432233b9c001f23eb28 = L.circleMarker(
+                [18.5204, 73.8567],
+                {"bubblingMouseEvents": true, "color": "#ff6b35", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff6b35", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 34.36175115207374, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047);
+        
+    
+        var popup_623374ab859fd5b8a30b2e1b7b2a1ac6 = L.popup({
+  "maxWidth": 260,
+});
+
+        
+            
+                var html_b417f70064e8988ad6190b473e607264 = $(`<div id="html_b417f70064e8988ad6190b473e607264" style="width: 100.0%; height: 100.0%;">     <div style='font-family:Arial,sans-serif;width:230px;background:#1a1a2e;                 color:#ddd;padding:14px;border-radius:10px;'>       <div style='color:#e94560;font-size:1.15em;font-weight:700;                   border-bottom:1px solid #333;padding-bottom:6px;                   margin-bottom:8px;'>Pune</div>       <table style='width:100%;font-size:0.88em;'>         <tr><td>🦠 Confirmed</td><td style='text-align:right;color:#f0f6fc;'><b>13,587</b></td></tr>         <tr><td>💀 Deaths</td>   <td style='text-align:right;color:#e94560;'>281</td></tr>         <tr><td>💚 Recovered</td><td style='text-align:right;color:#2a9d8f;'>10,981</td></tr>         <tr><td>💉 Vaccinated</td><td style='text-align:right;color:#a8dadc;'>7,238</td></tr>         <tr><td>🧪 Tests</td>    <td style='text-align:right;color:#e9c46a;'>54,348</td></tr>         <tr><td>📉 Fatality</td> <td style='text-align:right;color:#f4a261;'>2.07%</td></tr>         <tr><td>🔬 Positivity</td><td style='text-align:right;color:#7c3aed;'>25.0%</td></tr>       </table>     </div></div>`)[0];
+                popup_623374ab859fd5b8a30b2e1b7b2a1ac6.setContent(html_b417f70064e8988ad6190b473e607264);
+            
+        
+
+        circle_marker_eae2fdbe4dc2c432233b9c001f23eb28.bindPopup(popup_623374ab859fd5b8a30b2e1b7b2a1ac6)
+        ;
+
+        
+    
+    
+            circle_marker_eae2fdbe4dc2c432233b9c001f23eb28.bindTooltip(
+                `<div style="background:#1a1a2e;color:#fff;">
+                     <b>Pune</b><br>13,587 confirmed
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047.addTo(map_f26d9bd2eebfc6979b8bde5f00235cbe);
+        
+    
+            var heat_map_0b7ccd3b94604eb1221b1073d189375e = L.heatLayer(
+                [[12.9716, 77.5946, 0.7334869431643625], [13.0827, 80.2707, 1.0], [28.7041, 77.1025, 0.7078670177748518], [28.4595, 77.0266, 0.4859008119376783], [17.385, 78.4867, 0.8340465218345403], [22.5726, 88.3639, 0.8454026771999122], [19.076, 72.8777, 0.9724050910686856], [28.5355, 77.391, 0.7894996708360764], [29.3909, 76.9635, 0.9755870089971472], [18.5204, 73.8567, 0.7453917050691244]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 50,
+  "blur": 35,
+  "gradient": {
+  "0.3": "#0f3460",
+  "0.6": "#f4a261",
+  "1.0": "#e94560",
+},
+}
+            );
+        
+    
+            heat_map_0b7ccd3b94604eb1221b1073d189375e.addTo(map_f26d9bd2eebfc6979b8bde5f00235cbe);
+        
+    
+            var feature_group_4d7bbe9406e9123583d64937667f9dda = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_ad7849f0101d0f1533b096ece9766302 = L.circleMarker(
+                [12.9716, 77.5946],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17.277625762997264, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_ad7849f0101d0f1533b096ece9766302.bindTooltip(
+                `<div>
+                     Bangalore: 5,358 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_10a284ba7a0e4d2858b000fa8f56b15a = L.circleMarker(
+                [13.0827, 80.2707],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.558408756051358, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_10a284ba7a0e4d2858b000fa8f56b15a.bindTooltip(
+                `<div>
+                     Chennai: 3,591 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_50a404348e6d4f0b783bbcbb09e5b917 = L.circleMarker(
+                [28.7041, 77.1025],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25.311723847611027, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_50a404348e6d4f0b783bbcbb09e5b917.bindTooltip(
+                `<div>
+                     Delhi: 9,175 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_43c8f95067bd083935fbf413ce37908b = L.circleMarker(
+                [28.4595, 77.0266],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20.458008840244158, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_43c8f95067bd083935fbf413ce37908b.bindTooltip(
+                `<div>
+                     Gurugram: 6,869 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_95429a8222c573cf0efe77ec09d0e26b = L.circleMarker(
+                [17.385, 78.4867],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.035781940644075, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_95429a8222c573cf0efe77ec09d0e26b.bindTooltip(
+                `<div>
+                     Hyderabad: 4,768 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e8c7ebad02b6583f8b9ccdb1db445ebf = L.circleMarker(
+                [22.5726, 88.3639],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20.380130498842348, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_e8c7ebad02b6583f8b9ccdb1db445ebf.bindTooltip(
+                `<div>
+                     Kolkata: 6,832 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_808b13fc54c517b8a3535b750806bea8 = L.circleMarker(
+                [19.076, 72.8777],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 26.0, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_808b13fc54c517b8a3535b750806bea8.bindTooltip(
+                `<div>
+                     Mumbai: 9,502 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b6b38dbb5ebbf2136bdd7b462c783a3d = L.circleMarker(
+                [28.5355, 77.391],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.642601557566827, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_b6b38dbb5ebbf2136bdd7b462c783a3d.bindTooltip(
+                `<div>
+                     Noida: 8,382 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f11319856d7bd86fc016ed80dacb41ea = L.circleMarker(
+                [29.3909, 76.9635],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.29425384129657, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_f11319856d7bd86fc016ed80dacb41ea.bindTooltip(
+                `<div>
+                     Panipat: 5,841 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cc9caab0c5af868f9a93774aef6cec2f = L.circleMarker(
+                [18.5204, 73.8567],
+                {"bubblingMouseEvents": true, "color": "#2a9d8f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2a9d8f", "fillOpacity": 0.5, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21.234687434224377, "stroke": true, "weight": 1.5}
+            ).addTo(feature_group_4d7bbe9406e9123583d64937667f9dda);
+        
+    
+            circle_marker_cc9caab0c5af868f9a93774aef6cec2f.bindTooltip(
+                `<div>
+                     Pune: 7,238 vaccinated
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_4d7bbe9406e9123583d64937667f9dda.addTo(map_f26d9bd2eebfc6979b8bde5f00235cbe);
+        
+    
+            var layer_control_49acebccdc7590ec29aeed45465e85b3_layers = {
+                base_layers : {
+                    "cartodbdarkmatter" : tile_layer_4819a044c408fbb3200d14c205a2456a,
+                },
+                overlays :  {
+                    "\ud83c\udfd9\ufe0f City Clusters" : marker_cluster_0f6e5717992ad9cb8ed39d5f02eb6047,
+                    "\ud83d\udd25 Case Heatmap" : heat_map_0b7ccd3b94604eb1221b1073d189375e,
+                    "\ud83d\udc89 Vaccination Intensity" : feature_group_4d7bbe9406e9123583d64937667f9dda,
+                },
+            };
+            let layer_control_49acebccdc7590ec29aeed45465e85b3 = L.control.layers(
+                layer_control_49acebccdc7590ec29aeed45465e85b3_layers.base_layers,
+                layer_control_49acebccdc7590ec29aeed45465e85b3_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_f26d9bd2eebfc6979b8bde5f00235cbe);
+
+        
+</script>
+</html>
